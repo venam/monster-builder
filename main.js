@@ -24,7 +24,8 @@ var mainState = {
 			new Torso(game),
 			new Head(game),
 			new Shoulder(game),
-			new Hand(game),
+			new Hand(game, {x:80,y:300}),
+			new Hand(game, {x:100,y:90})
 		];
 		//this.addBodyParts(game);
 		//text = game.add.text(16, 16, 'Overlapping: false', {fill: '#FFFFFF'});

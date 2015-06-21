@@ -1,4 +1,4 @@
-function Hand(game) {
+function Hand(game,position) {
 	var sprite = game.add.sprite(0, 0,'pipe');
 	// call the constructor of the parent
 	BodyPart.call(
@@ -11,7 +11,7 @@ function Hand(game) {
 			{x: 0.45, y:0.2}, //the anchor point
 			[ //the sticky parts
 			],
-			{x: 50, y:300}, //initial position
+			position, //initial position
 			true //DEBUG
 			);
 	this.state = 0;

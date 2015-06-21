@@ -116,10 +116,14 @@ BodyPart.prototype.touchListener = function(otherPart) {
 			//can only drag from parent to child
 			if (otherPart.phantomSprite.parent != this.phantomContainer
 					&& !otherPart.phantomSprite.input.isDragged){
+				if (this.DEBUGStickyParts[i].stickied == true) {
+					continue;
+				}
 				if (otherPart.touchCounter<7) {
 					otherPart.touchCounter++;
 				}
 				else {
+					this.DEBUGStickyParts[i].stickied = true;
 					otherPart.phantomSprite.inputEnabled = false;
 					otherPart.phantomSprite.input.disableDrag();
 					otherPart.phantomSprite.position.x = this.stickyParts[i].x-(this.sprite.width*this.anchorPoint.x);
