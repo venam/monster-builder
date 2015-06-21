@@ -22,6 +22,7 @@ var mainState = {
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		this.allBodyParts = [
 			new Torso(game),
+			new Head(game),
 			new Shoulder(game),
 			new Hand(game),
 		];
@@ -39,7 +40,6 @@ var mainState = {
 			this.allBodyParts[i].update();
 			for (var j in this.allBodyParts) {
 				if (this.allBodyParts[i].touchListener(this.allBodyParts[j])) {
-					console.log("they are touching at the right place");
 					break;
 				}
 			}

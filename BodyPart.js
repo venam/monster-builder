@@ -27,9 +27,6 @@ function BodyPart(
 	//the main image of the part
 	//it's the role of the implementator to add animation to it
 	this.sprite = sprite;
-	//the stackOrder is an integer that is used to know the superposition of
-	//the elements, if it's greater it'll be above
-	this.stackOrder = stackOrder;
 	//An array with the positions {x: x, y: y, type: type} of the sticky parts,
 	//aka the parts that can have another part sticked to them
 	this.stickyParts = stickyParts;
@@ -42,11 +39,16 @@ function BodyPart(
 	//where to place the part at the beginning {x:x, y:y}
 	this.initialPosition = initialPosition;
 	this.phantomSprite = this.game.add.sprite(this.initialPosition.x, this.initialPosition.y);
+	//the stackOrder is an integer that is used to know the superposition of
+	//the elements, if it's greater it'll be above
+	this.stackOrder = stackOrder;
 	this.phantomSprite.anchor.setTo(this.anchorPoint.x, this.anchorPoint.y);
 	this.phantomContainer =  new Phaser.Group(game,this.phantomSprite);
 	this.phantomContainer.add(this.sprite);
 	this.sprite.position.x -= (this.sprite.width*this.anchorPoint.x);
 	this.sprite.position.y -= (this.sprite.height*this.anchorPoint.y);
+	this.phantomSprite.stackOrder = stackOrder;
+	this.sprite.stackOrder = stackOrder;
 	//if DEBUG is enabled (default: false) it will draw the sticky parts and
 	//the anchor point
 	this.DEBUG = (DEBUG == null ? false : DEBUG);
@@ -81,6 +83,7 @@ BodyPart.prototype.drawDebug = function(game) {
 	this.DEBUGAnchor.anchor.x = this.DEBUGAnchor.anchor.y = 0.25;
 	this.DEBUGAnchor.position.x = 0;
 	this.DEBUGAnchor.position.y = 0;
+	this.DEBUGAnchor.stackOrder = this.stackOrder;
 	this.phantomContainer.add(this.DEBUGAnchor);
 
 	this.DEBUGStickyParts = [];
@@ -92,6 +95,7 @@ BodyPart.prototype.drawDebug = function(game) {
 		);
 		sticky.anchor.x = sticky.anchor.y = 0.5;
 		this.DEBUGStickyParts.push(sticky);
+		sticky.stackOrder = this.stackOrder;
 		this.phantomContainer.add(sticky);
 	}
 };
@@ -120,16 +124,35 @@ BodyPart.prototype.touchListener = function(otherPart) {
 					otherPart.phantomSprite.input.disableDrag();
 					otherPart.phantomSprite.position.x = this.stickyParts[i].x-(this.sprite.width*this.anchorPoint.x);
 					otherPart.phantomSprite.position.y = this.stickyParts[i].y-(this.sprite.height*this.anchorPoint.y);
-					this.phantomContainer.add(otherPart.phantomSprite);
+					//this.phantomContainer.add(otherPart.phantomSprite);
+					if (this.DEBUG) {
+						console.log("length of container before add: "+this.phantomContainer.length);
+					}
+					this.phantomContainer.addChildAt(otherPart.phantomSprite, 0);
 					otherPart.phantomSprite.bringToTop();
 					otherPart.phantomSprite.position.x = this.stickyParts[i].x-(this.sprite.width*this.anchorPoint.x);
 					otherPart.phantomSprite.position.y = this.stickyParts[i].y-(this.sprite.height*this.anchorPoint.y);
+					this.rearrangeStack();
+					
 				}
 				return true;
 			}
 		}
 	}
 	return false;
+};
+
+
+BodyPart.prototype.rearrangeStack = function() {
+	if (this.DEBUG) {
+		console.log("length of container after add: "+this.phantomContainer.length);
+	}
+	this.phantomContainer.sort('stackOrder', Phaser.Group.SORT_ASCENDING);
+	if (this.DEBUG) {
+		this.phantomContainer.forEach(function(child) {
+			console.log("child stackOrder: "+child.stackOrder);
+		}, this);
+	}
 };
 
 

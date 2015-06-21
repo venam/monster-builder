@@ -7,7 +7,7 @@ function Hand(game) {
 			'hand test', //the name of the part
 			'hand', //the type of the part
 			sprite, //the sprite drawn for the part
-			0, //the stack order
+			-2, //the stack order
 			{x: 0.45, y:0.2}, //the anchor point
 			[ //the sticky parts
 			],

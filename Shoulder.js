@@ -7,7 +7,7 @@ function Shoulder(game) {
 		'shoulder test', //the name of the part
 		'shoulder', //the type of the part
 		sprite, //the sprite drawn for the part
-		0, //the stack order
+		1, //the stack order
 		{x: 0.2, y:0.3}, //the anchor point
 		[ //the sticky parts
 			{x:13, y:17, type:'hand'},

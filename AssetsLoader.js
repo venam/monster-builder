@@ -8,6 +8,12 @@ var AssetsLoader = {
 			'height': 20,
 			'numberOfFrames': 2
 		},
+		'angry_head': {
+			'location': 'assets/head_sprite.png',
+			'width': 26,
+			'height': 35,
+			'numberOfFrames': 3
+		},
 		'pipe': {
 			'location': 'assets/pipe.png',
 			'width': 20,

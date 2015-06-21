@@ -10,6 +10,7 @@ function Torso(game) {
 		0, //the stack order
 		{x: 0.5, y:0.5}, //the anchor point
 		[ //the sticky parts
+			{x:10, y:-5, type:'head'},
 			{x:20, y:0, type:'shoulder'},
 			{x:0, y:0, type:'shoulder2'},
 			{x:20, y:20, type:'rightleg'},
@@ -60,5 +61,4 @@ Torso.prototype.constructor = Torso;
 
 
 Torso.prototype.clickListener = function(sprite) {
-	console.log("torso was clicked");
 };
