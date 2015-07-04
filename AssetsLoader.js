@@ -19,7 +19,44 @@ var AssetsLoader = {
 			'width': 20,
 			'height': 20,
 			'numberOfFrames': 2
+		},
+		'knight_torso': {
+			'location': 'assets/knight_body.png',
+			'width':  52,
+			'height': 42,
+			'numberOfFrames': 1
+		},
+		'knight_head': {
+			'location': 'assets/knight_head.png',
+			'width': 60,
+			'height': 60
+		},
+		'knight_back_arm': {
+			'location': 'assets/knight_back_arm.png',
+			'width': 30,
+			'height': 46
+		},
+		'knight_right_leg': {
+			'location': 'assets/knight_right_leg.png',
+			'width': 30,
+			'height': 28
+		},
+		'knight_left_leg': {
+			'location': 'assets/knight_left_leg.png',
+			'width': 30,
+			'height': 28
+		},
+		'knight_front_arm': {
+			'location': 'assets/knight_front_arm.png',
+			'width': 30,
+			'height': 46
+		},
+		'knight_eyes': {
+			'location': 'assets/knight_eyes.png',
+			'width': 38,
+			'height': 18
 		}
+
 	},
 
 	allSoundsAssets: {

@@ -1,5 +1,5 @@
 function Head(game) {
-	var sprite = game.add.sprite(0, 0,'angry_head');
+	var sprite = game.add.sprite(0, 0,'knight_head');
 	// add(name, frames, frameRate, loop, useNumericIndex) 
 	sprite.animations.add('movehead', [1,2,3], 2, true);
 	// play(name, frameRate, loop, killOnComplete) 
@@ -12,12 +12,13 @@ function Head(game) {
 			'head test', //the name of the part
 			'head', //the type of the part
 			sprite, //the sprite drawn for the part
-			10, //the stack order
+			3, //the stack order
 			{x: 0.45, y:0.9}, //the anchor point
 			[ //the sticky parts
+				{x:35, y:36, type:'eyes'},
 			],
 			{x: 300, y:300}, //initial position
-			false //DEBUG
+			true //DEBUG
 			);
 	this.state = 0;
 

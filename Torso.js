@@ -1,5 +1,5 @@
 function Torso(game) {
-	var sprite = game.add.sprite(0, 0,'bird');
+	var sprite = game.add.sprite(0, 0,'knight_torso');
 	// call the constructor of the parent
 	BodyPart.call(
 		this,
@@ -10,11 +10,11 @@ function Torso(game) {
 		0, //the stack order
 		{x: 0.5, y:0.5}, //the anchor point
 		[ //the sticky parts
-			{x:10, y:-5, type:'head'},
-			{x:20, y:0, type:'shoulder'},
-			{x:0, y:0, type:'shoulder2'},
-			{x:20, y:20, type:'rightleg'},
-			{x:0, y:20, type:'leftleg'},
+			{x:30, y:7, type:'head'},
+			{x:40, y:4, type:'back_arm'},
+			{x:4, y:6, type:'front_arm'},
+			{x:35, y:30, type:'right_leg'},
+			{x:13, y:30, type:'left_leg'},
 		],
 		{x: 200, y:200}, //initial position
 		true //DEBUG
