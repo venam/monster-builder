@@ -27,6 +27,7 @@ function BodyPart(
 	//the main image of the part
 	//it's the role of the implementator to add animation to it
 	this.sprite = sprite;
+	this.sprite.partImage = true;
 	//An array with the positions {x: x, y: y, type: type} of the sticky parts,
 	//aka the parts that can have another part sticked to them
 	this.stickyParts = stickyParts;
@@ -43,6 +44,12 @@ function BodyPart(
 	//the elements, if it's greater it'll be above
 	this.stackOrder = stackOrder;
 	this.phantomSprite.anchor.setTo(this.anchorPoint.x, this.anchorPoint.y);
+
+	this.phantomSprite.inputEnabled = true;
+	//Allow dragging - the 'true' parameter will make the phantomSprite snap to the center
+	this.phantomSprite.input.enableDrag(true);
+	this.phantomSprite.events.onInputDown.add(this.clickListener, this);
+	this.phantomSprite.input.useHandCursor = true;
 	this.phantomContainer =  new Phaser.Group(game,this.phantomSprite);
 	this.phantomContainer.add(this.sprite);
 	this.sprite.position.x -= (this.sprite.width*this.anchorPoint.x);
@@ -84,6 +91,7 @@ BodyPart.prototype.drawDebug = function(game) {
 	this.DEBUGAnchor.position.x = 0;
 	this.DEBUGAnchor.position.y = 0;
 	this.DEBUGAnchor.stackOrder = this.stackOrder;
+	this.DEBUGAnchor.partImage = true;
 	this.phantomContainer.add(this.DEBUGAnchor);
 
 	this.DEBUGStickyParts = [];
@@ -96,6 +104,7 @@ BodyPart.prototype.drawDebug = function(game) {
 		sticky.anchor.x = sticky.anchor.y = 0.5;
 		this.DEBUGStickyParts.push(sticky);
 		sticky.stackOrder = this.stackOrder;
+		sticky.partImage = true;
 		this.phantomContainer.add(sticky);
 	}
 };
@@ -108,6 +117,51 @@ BodyPart.prototype.updateDebug = function() {
 
 // Checks if a part anchor touches one of the sticky part of another
 BodyPart.prototype.touchListener = function(otherPart) {
+	//attaching
+	if (! game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)) {
+		return this.attachPart(otherPart);
+	}
+};
+
+
+BodyPart.prototype.clickListener = function(sprite) {
+	//detaching
+	if ( game.input.keyboard.isDown(Phaser.Keyboard.SHIFT)) {
+		return this.detachParts();
+	}
+};
+
+
+BodyPart.prototype.detachParts = function(game) {
+	//fetch the non neede parts
+	var nonNeededParts = [];
+	for (var i=0; i< this.phantomContainer.length; i++) {
+		var c = this.phantomContainer.getChildAt(i);
+		if (!c.partImage) {
+			nonNeededParts.push(c);
+		}
+	}
+
+	//unsticky everything
+	for (var i=0; i< this.DEBUGStickyParts.length; i++) {
+		this.DEBUGStickyParts[i].stickied = false;
+	}
+
+	for (var i=0; i< nonNeededParts.length; i++) {
+		this.phantomContainer.remove(nonNeededParts[i],false);
+		nonNeededParts[i].inputEnabled = true;
+		nonNeededParts[i].input.enableDrag();
+		nonNeededParts[i].position.x = this.phantomSprite.position.x + nonNeededParts[i].position.x + 10;
+		nonNeededParts[i].position.y = this.phantomSprite.position.y + nonNeededParts[i].position.y + 10;
+		this.game.world.add(nonNeededParts[i]);
+		
+	}
+
+	return true;
+};
+
+
+BodyPart.prototype.attachPart = function(otherPart) {
 	var otherPartBounds = otherPart.DEBUGAnchor.getBounds();
 	for (var i in this.DEBUGStickyParts) {
 		var stickyBounds = this.DEBUGStickyParts[i].getBounds();
@@ -137,7 +191,7 @@ BodyPart.prototype.touchListener = function(otherPart) {
 					otherPart.phantomSprite.position.x = this.stickyParts[i].x-(this.sprite.width*this.anchorPoint.x);
 					otherPart.phantomSprite.position.y = this.stickyParts[i].y-(this.sprite.height*this.anchorPoint.y);
 					this.rearrangeStack();
-					
+
 				}
 				return true;
 			}

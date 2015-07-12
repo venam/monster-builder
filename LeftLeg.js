@@ -16,13 +16,6 @@ function LeftLeg(game) {
 			true //DEBUG
 			);
 	this.state = 0;
-
-	//Allow dragging
-	//Input Enable the sprites
-	this.phantomSprite.inputEnabled = true;
-	//Allow dragging - the 'true' parameter will make the phantomSprite snap to the center
-	this.phantomSprite.input.useLeftLegCursor = true;
-	this.phantomSprite.input.enableDrag(true);
 }
 
 

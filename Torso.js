@@ -20,14 +20,6 @@ function Torso(game) {
 		true //DEBUG
 	);
 	this.state = 0;
-
-	//Allow dragging
-	//Input Enable the sprites
-	this.phantomSprite.inputEnabled = true;
-	//Allow dragging - the 'true' parameter will make the phantomSprite snap to the center
-	this.phantomSprite.input.enableDrag(true);
-	this.phantomSprite.events.onInputDown.add(this.clickListener, this);
-	this.phantomSprite.input.useHandCursor = true;
 }
 
 
@@ -58,7 +50,3 @@ Torso.prototype.constructor = Torso;
 //	}
 //	BodyPart.prototype.update.apply(this);
 //};
-
-
-Torso.prototype.clickListener = function(sprite) {
-};
