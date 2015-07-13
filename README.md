@@ -4,7 +4,7 @@ Monster Builder
 #WIP#
 
 
-An anchor system to build monsters parts by parts.
+An anchor system to build monsters part by part.
 
 
 ##With the example from mighty editor tutorial##

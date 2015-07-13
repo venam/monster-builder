@@ -1,4 +1,4 @@
-function Head(game) {
+function Head(game, DEBUG) {
 	var sprite = game.add.sprite(0, 0,'knight_head');
 	// add(name, frames, frameRate, loop, useNumericIndex) 
 	sprite.animations.add('movehead', [1,2,3], 2, true);
@@ -18,7 +18,7 @@ function Head(game) {
 				{x:35, y:36, type:'eyes'},
 			],
 			{x: 300, y:300}, //initial position
-			true //DEBUG
+			DEBUG //DEBUG
 			);
 	this.state = 0;
 }

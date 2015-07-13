@@ -1,4 +1,4 @@
-function LeftLeg(game) {
+function LeftLeg(game, DEBUG) {
 	var sprite = game.add.sprite(0, 0,'knight_left_leg');
 
 	// call the constructor of the parent
@@ -13,7 +13,7 @@ function LeftLeg(game) {
 			[ //the sticky parts
 			],
 			{x: 150, y:300}, //initial position
-			true //DEBUG
+			DEBUG //DEBUG
 			);
 	this.state = 0;
 }

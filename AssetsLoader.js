@@ -55,8 +55,12 @@ var AssetsLoader = {
 			'location': 'assets/knight_eyes.png',
 			'width': 38,
 			'height': 18
+		},
+		'knight_eyes_angry': {
+			'location': 'assets/knight_eyes_angry.png',
+			'width': 38,
+			'height': 18
 		}
-
 	},
 
 	allSoundsAssets: {

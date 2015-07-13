@@ -1,4 +1,4 @@
-function Torso(game) {
+function Torso(game, DEBUG) {
 	var sprite = game.add.sprite(0, 0,'knight_torso');
 	// call the constructor of the parent
 	BodyPart.call(
@@ -17,7 +17,7 @@ function Torso(game) {
 			{x:13, y:30, type:'left_leg'},
 		],
 		{x: 200, y:200}, //initial position
-		true //DEBUG
+		DEBUG //DEBUG
 	);
 	this.state = 0;
 }

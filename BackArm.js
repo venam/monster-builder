@@ -1,4 +1,4 @@
-function BackArm(game) {
+function BackArm(game, DEBUG) {
 	var sprite = game.add.sprite(0, 0,'knight_back_arm');
 	// call the constructor of the parent
 	BodyPart.call(
@@ -12,7 +12,7 @@ function BackArm(game) {
 		[ //the sticky parts
 		],
 		{x: 190, y:100}, //initial position
-		true //DEBUG
+		DEBUG //DEBUG
 	);
 	this.state = 0;
 }

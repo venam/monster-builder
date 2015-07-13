@@ -20,14 +20,16 @@ var mainState = {
 
 		// set the physics system
 		game.physics.startSystem(Phaser.Physics.ARCADE);
+		var DEBUG = false;
 		this.allBodyParts = [
-			new Torso(game),
-			new Head(game),
-			new Eyes(game),
-			new RightLeg(game),
-			new LeftLeg(game),
-			new FrontArm(game),
-			new BackArm(game),
+			new Torso(game, DEBUG),
+			new Head(game, DEBUG),
+			new Eyes(game, 'knight_eyes_angry', 400, 300, DEBUG),
+			new Eyes(game, 'knight_eyes', 440, 300, DEBUG),
+			new RightLeg(game, DEBUG),
+			new LeftLeg(game, DEBUG),
+	 		new FrontArm(game, DEBUG),
+			new BackArm(game, DEBUG),
 		];
 		//this.addBodyParts(game);
 		//text = game.add.text(16, 16, 'Overlapping: false', {fill: '#FFFFFF'});

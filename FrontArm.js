@@ -1,4 +1,4 @@
-function FrontArm(game) {
+function FrontArm(game, DEBUG) {
 	var sprite = game.add.sprite(0, 0,'knight_front_arm');
 	// call the constructor of the parent
 	BodyPart.call(
@@ -12,7 +12,7 @@ function FrontArm(game) {
 		[ //the sticky parts
 		],
 		{x: 100, y:100}, //initial position
-		true //DEBUG
+		DEBUG //DEBUG
 	);
 	this.state = 0;
 }

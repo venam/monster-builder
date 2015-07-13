@@ -1,4 +1,4 @@
-function RightLeg(game) {
+function RightLeg(game, DEBUG) {
 	var sprite = game.add.sprite(0, 0,'knight_right_leg');
 
 	// call the constructor of the parent
@@ -13,7 +13,7 @@ function RightLeg(game) {
 			[ //the sticky parts
 			],
 			{x: 30, y:300}, //initial position
-			true //DEBUG
+			DEBUG //DEBUG
 			);
 	this.state = 0;
 }

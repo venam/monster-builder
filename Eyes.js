@@ -1,5 +1,5 @@
-function Eyes(game) {
-	var sprite = game.add.sprite(0, 0,'knight_eyes');
+function Eyes(game, eyeName, x, y, DEBUG) {
+	var sprite = game.add.sprite(0, 0, eyeName);
 
 	// call the constructor of the parent
 	BodyPart.call(
@@ -12,8 +12,8 @@ function Eyes(game) {
 			{x: 0.45, y:0.5}, //the anchor point
 			[ //the sticky parts
 			],
-			{x: 400, y:300}, //initial position
-			true //DEBUG
+			{x:x, y:y}, //initial position
+			DEBUG //DEBUG
 			);
 	this.state = 0;
 }
