@@ -21,8 +21,9 @@ var mainState = {
 		// set the physics system
 		game.physics.startSystem(Phaser.Physics.ARCADE);
 		var DEBUG = false;
+		this.torso = new Torso(game, DEBUG);
 		this.allBodyParts = [
-			new Torso(game, DEBUG),
+			this.torso,
 			new Head(game, DEBUG),
 			new Eyes(game, 'knight_eyes_angry', 400, 300, DEBUG),
 			new Eyes(game, 'knight_eyes', 440, 300, DEBUG),

@@ -1,6 +1,8 @@
 /*
  * This abstract class is used to build up the parts of the monster character
  *
+ * TODO: Setter and Getter to be able to do generic parts that are fed the
+ * necessary data on the fly
  */
 
 function BodyPart(
@@ -62,6 +64,113 @@ function BodyPart(
 	this.drawDebug(game);
 	this.touchCounter = 0;
 }
+
+
+BodyPart.prototype.setStackOrder = function(newOrder) {
+	this.stackOrder = newOrder;
+	this.phantomSprite.stackOrder = this.stackOrder;
+	this.sprite.stackOrder = this.stackOrder;
+	this.DEBUGAnchor.stackOrder = this.stackOrder;
+	//actually update all the children that belongs to this part
+	for (var i=0; i< this.phantomContainer.length; i++) {
+		var c = this.phantomContainer.getChildAt(i);
+		if (c.partImage) {
+			c.stackOrder = this.stackOrder;
+		}
+	}
+	//update everything
+	//best way is to detach
+	this.detachParts();
+};
+
+
+BodyPart.prototype.setAnchorPoint = function(newAnchor) {
+	//remove all parts that are not concerned
+	this.detachParts();
+
+	//get the difference in position -> to recalibrate everything
+	var xDiff = this.anchorPoint.x - newAnchor.x;
+	var yDiff = this.anchorPoint.y - newAnchor.y;
+
+	this.anchorPoint = newAnchor;
+
+	this.DEBUGAnchor.destroy();
+
+	this.DEBUGAnchor = game.add.sprite(
+		0, 0,
+		this.createBitmap(game,{width:5,height:5},"#0000FF")
+	);
+	this.DEBUGAnchor.anchor.x = this.DEBUGAnchor.anchor.y = 0.25;
+	this.DEBUGAnchor.position.x = 0;
+	this.DEBUGAnchor.position.y = 0;
+	this.DEBUGAnchor.stackOrder = this.stackOrder;
+	this.DEBUGAnchor.partImage = true;
+	this.phantomContainer.add(this.DEBUGAnchor);
+
+	//loop through phantomContainer and reset the position of subParts
+	for (var i=0; i< this.phantomContainer.length; i++) {
+		var c = this.phantomContainer.getChildAt(i);
+		c.x += xDiff;
+		c.y += yDiff;
+	}
+};
+
+
+BodyPart.prototype.setStickyParts = function(newSticky) {
+	//remove all parts that are not concerned
+	this.detachParts();
+	//remove all the sticky parts
+	for (var i in this.DEBUGStickyParts) {
+		this.DEBUGStickyParts[i].destroy();
+	}
+	//start back from 0
+	this.DEBUGStickyParts = [];
+	this.stickyParts = newSticky;
+	for (var i in this.stickyParts) {
+		var sticky = game.add.sprite(
+				this.stickyParts[i].x-(this.sprite.width*this.anchorPoint.x),
+				this.stickyParts[i].y-(this.sprite.height*this.anchorPoint.y),
+				this.createBitmap(game,{width:10,height:10},"#FF0000")
+		);
+		sticky.anchor.x = sticky.anchor.y = 0.5;
+		this.DEBUGStickyParts.push(sticky);
+		sticky.stackOrder = this.stackOrder;
+		sticky.partImage = true;
+		this.phantomContainer.add(sticky);
+	}
+};
+
+
+BodyPart.prototype.setType = function(newType) {
+	this.type = newType;
+};
+
+
+BodyPart.prototype.setName = function(newName) {
+	this.name = newName;
+};
+
+
+BodyPart.prototype.toggleDebug = function() {
+	this.DEBUG = !this.DEBUG;
+	this.setAnchorPoint(this.anchorPoint);
+	this.setStickyParts(this.stickyParts);
+}
+
+
+BodyPart.prototype.setSprite = function(newSprite) {
+	//remove the sprite
+	this.sprite.destroy();
+	//change the current sprite
+	this.sprite = newSprite;
+	this.sprite.partImage = true;
+	this.sprite.stackOrder = this.stackOrder;
+	this.sprite.position.x -= (this.sprite.width*this.anchorPoint.x);
+	this.sprite.position.y -= (this.sprite.height*this.anchorPoint.y);
+	this.detachParts();
+	//Add it at the bottom of the stack
+	this.phantomContainer.add(this.sprite);
+};
 
 
 //returns a bitmap of size {width:width,height:height} and of color
